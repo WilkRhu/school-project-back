@@ -1,10 +1,12 @@
 require('dotenv').config();
-require('./connection');
 const express =  require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const routes = require('./routes');
 const app = express();
-const bodyParser = require('body-parser')
-const cors = require('cors')
 
+app.use(express.json());
+app.use(routes);
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
