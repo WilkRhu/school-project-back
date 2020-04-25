@@ -1,36 +1,21 @@
 const connection = require("../database/connection");
-const knex = require("knex");
-const { userSchema } = require("../models/users");
 const userValidation = require("../validations/userValidation");
 const addressValidation = require("../validations/enderecoValidation");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
 const addressUser = async (endereco, id) => {
-  const { error, value } = addressValidation.validate(endereco);
-  if (!error) {
-    await connection("address").insert({
-      users_id: id,
-      rua: value.rua,
-      numero: value.numero,
-      cidade: value.cidade,
-      bairro: value.bairro,
-      estado: value.estado,
-      telefone: value.telefone,
-      referencia: value.referencia,
-    });
-  } else {
-    await connection("address").insert({
-      users_id: "não cadastrado",
-      rua: "não cadastrado",
-      numero: "não cadastrado",
-      cidade: "não cadastrado",
-      bairro: "não cadastrado",
-      estado: "não cadastrado",
-      telefone: "não cadastrado",
-      referencia: "não cadastrado",
-    });
-  }
+  const { value } = addressValidation.validate(endereco);
+  await connection("address").insert({
+    users_id: id || "não cadastrado",
+    rua: value.rua || "não cadastrado",
+    numero: value.numero || "não cadastrado",
+    cidade: value.cidade || "não cadastrado",
+    bairro: value.bairro || "não cadastrado",
+    estado: value.estado || "não cadastrado",
+    telefone: value.telefone || "não cadastrado",
+    referencia: value.referencia || "não cadastrado",
+  });
 };
 
 const createUsers = async (req, res) => {
@@ -65,6 +50,30 @@ const createUsers = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user } = req.body;
+    await connection("users").where("id", id).update(user);
+    return res.status(201).json("Usuário Atualizado com sucesso!");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
+const updataAdressUser = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const { endereco } = req.body;
+    await connection("address").where("users_id", user_id).update(endereco);
+    return res.status(201).json("Endereço atualizado com sucesso");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 module.exports = {
   createUsers,
+  updateUser,
+  updataAdressUser,
 };
