@@ -72,8 +72,23 @@ const updataAdressUser = async (req, res) => {
   }
 };
 
+const auth = async (req, res) => {
+  try {
+    const { login, senha } = req.body;
+    if (!login || !senha) {
+      const user = connection("users")
+        .where("login", login && "senha", md5(senha))
+        .select("*");
+      console.log(user);
+    }
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 module.exports = {
   createUsers,
   updateUser,
   updataAdressUser,
+  auth,
 };
