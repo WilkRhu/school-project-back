@@ -10,11 +10,11 @@ module.exports = {
   },*/
 
   development: {
-    client: 'mysql',
+    client: 'postgres',
     connection: {
       database: 'school',
-      user:     'root',
-      password: ''
+      user:     'postgres',
+      password: '1234'
     },
     pool: {
       min: 2,
@@ -27,11 +27,11 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'postgres',
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+      database: 'scholl',
+      user:     'postgres',
+      password: '1234'
     },
     pool: {
       min: 2,
