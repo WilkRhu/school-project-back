@@ -5,11 +5,10 @@ exports.up = function (knex) {
     table.string("login").notNullable();
     table.string("email").notNullable().unique();
     table.string("senha").notNullable();
-    table.string("tipo").notNullable();
+    table.enu("tipo", ["admin", "aluno", "professor"]).notNullable();
     table.string("dataNascimento").notNullable();
-    table.string("token").notNullable();
-    table.datetime("create_at");
-    table.datetime("updated_at");
+    table.timestamp("create_at").defaultTo(knex.fn.now());
+    table.timestamp("updated_at").defaultTo(knex.fn.now());
   });
 };
 

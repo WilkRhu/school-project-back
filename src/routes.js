@@ -3,6 +3,7 @@ const routes = express.Router();
 const usersController = require("./controllers/usersControllers");
 
 routes.post("/users", usersController.createUsers);
+routes.get("/users", usersController.getAllUser);
 routes.patch("/users/:id", usersController.updateUser);
 routes.patch("/endUser/:user_id", usersController.updataAdressUser);
 
