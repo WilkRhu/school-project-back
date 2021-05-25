@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require('@hapi/joi');
 
 const addressValidation = Joi.object({
   users_id: Joi.number().optional(),

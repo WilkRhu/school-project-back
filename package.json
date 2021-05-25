@@ -8,7 +8,9 @@
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "knex migrate:latest",
-    "rollback": "knex migrate:rollback"
+    "rollback": "knex migrate:rollback",
+    "lint:fix": "eslint --fix src",
+    "lint": "eslint src"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,8 @@
     "pg": "^8.6.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.3"
   }
 }
