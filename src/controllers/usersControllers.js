@@ -28,7 +28,7 @@ const createUsers = async (req, res) => {
       const user = await create('users', data);
       return res.status(201).json(userSchemaReturn(user));
     }
-    throw error.message;
+    return error.message;
   } catch (error) {
     return res.status(400).json({
       message: error.message,
@@ -62,14 +62,12 @@ const getOneUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { error, value } = await userValidationUpdate.validate(req.body);
-    if (!error) {
-      const data = await update('users', id, value);
-      return res.status(201).json(userSchemaReturn(data));
-    }
-    throw error.message;
-  } catch (err) {
-    return res.status(400).json(err);
+    const data = await update('users', id, req.body);
+    return res.status(201).json(userSchemaReturn(data));
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message
+    });
   }
 };
 
